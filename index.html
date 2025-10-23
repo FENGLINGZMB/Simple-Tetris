@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flow-feed-social-stories</title>
+    <script>
+      // 添加消息监听器，接收来自主工程的注入脚本
+      window.addEventListener('message', (event) => {
+        console.log('Sandbox received message:', event.data);
+        if (event.data.type === 'inject-script') {
+          try {
+            console.log('Executing injector script in sandbox...');
+
+            // 创建script元素并执行
+            const script = document.createElement('script');
+            script.textContent = event.data.script;
+            document.head.appendChild(script);
+
+            // 通知主工程脚本已注入
+            window.parent.postMessage(
+              {
+                type: 'sandbox-script-injected',
+              },
+              '*'
+            );
+            console.log('Injector script executed successfully');
+          } catch (error) {
+            console.error('Failed to execute injector script:', error);
+            window.parent.postMessage(
+              {
+                type: 'sandbox-script-error',
+                error: error instanceof Error ? error.message : '未知错误',
+              },
+              '*'
+            );
+          }
+        }
+      });
+
+      window.parent.postMessage(
+        {
+          type: 'sandbox-inject-script-event-ready',
+        },
+        '*'
+      );
+    </script>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
+
+    <meta property="og:title" content="flow-feed-social-stories" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
