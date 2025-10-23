@@ -235,7 +235,7 @@ export function Tetris() {
 
   return (
     <div className="flex flex-col items-center gap-6 p-8">
-      <h1 className="text-4xl font-bold text-foreground">俄罗斯方块</h1>
+      <h1 className="text-4xl font-bold text-teal-600">俄罗斯方块</h1>
       
       <Card className="p-6">
         <div className="flex gap-6">
